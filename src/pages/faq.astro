@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Edit these freely — the schema updates automatically.
+const faqs = [
+  { q: 'What do you actually do?', a: 'I work as a fractional growth and content marketing lead. That means strategy plus execution across SEO and AEO, content, lifecycle and CRM, performance, and organic social — building a demand engine that compounds rather than one you have to keep paying for.' },
+  { q: 'What is AEO, and why does it matter?', a: 'AEO (Answer Engine Optimisation) is about being the source that AI engines — Google AI Overviews, ChatGPT, Perplexity — cite when they answer a question. As search shifts from links to answers, AEO is becoming as important as classic SEO, and it needs structured content, clear authority signals, and schema markup.' },
+  { q: 'What industries do you work with?', a: 'Wealth, investing and financial products are my deepest specialty — they are among the most regulated and trust-heavy categories there are. But I treat that as depth, not a boundary. I currently lead growth for two early-stage AI products aimed at the US market, one in stock research and one in healthcare, which is a fair test of how well the playbook travels. It works for SaaS and any complex, considered purchase.' },
+  { q: 'What is your marketing stack?', a: 'GA4 and Search Console for measurement and search, CRM and lifecycle platforms for email and push, plus the wider martech and automation tools that connect them. I stay hands-on rather than only directing, so recommendations are grounded in what the data actually shows.' },
+  { q: 'Do you work beyond marketing — on product or pricing?', a: 'Often, yes. Growth stalls just as easily at onboarding, feature adoption or pricing as it does at acquisition. I have worked on prototypes, launches, post-launch health, and pricing and discounting decisions, and I am comfortable sitting in those conversations.' },
+  { q: 'How do you engage — retainer, project, or full-time?', a: 'All three. A monthly fractional retainer for ongoing growth leadership, fixed-scope projects such as an SEO/AEO overhaul or a content engine build, or a full-time senior role for the right team. If you are hiring rather than contracting, say so in the enquiry form and we can talk.' },
+  { q: 'Do you manage teams and agencies?', a: 'Yes. I build and lead both in-house teams and external partners across copywriting, design and video — setting scope, standards and timelines so the work actually ships instead of stalling in review.' },
+  { q: 'How quickly will I see results?', a: 'Paid and lifecycle work can move within weeks. SEO, AEO and content compound over months — that is their advantage, not a drawback. I set expectations honestly at the start and report on leading indicators, not vanity metrics.' },
+  { q: 'How do we start?', a: 'Send a few details through the enquiry form on the homepage. I reply within two business days, and the first conversation is a no-pressure scoping call to see if it is a fit.' },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<BaseLayout
+  title="FAQ — Ankur Tripathi"
+  description="Common questions about working with Ankur Tripathi: services, AEO, engagement models, timelines and how to start."
+  path="/faq/"
+  jsonld={faqSchema}
+>
+<div class="faq-shell">
+  <span class="eyebrow">FAQ</span>
+  <h1 class="serif" style="font-weight:400;font-size:clamp(36px,5.5vw,56px);line-height:1.05;letter-spacing:-.02em;margin:20px 0 36px;">Questions, answered.</h1>
+  {faqs.map((f) => (
+    <div class="faq-item">
+      <h3>{f.q}</h3>
+      <p>{f.a}</p>
+    </div>
+  ))}
+  <p style="margin-top:40px;color:var(--ink-soft);">Still curious? <a href="/#contact" style="color:var(--clay);border-bottom:1px solid var(--clay);">Send me a note →</a></p>
+</div>
+</BaseLayout>

@@ -1,0 +1,25 @@
+---
+const { active = '' } = Astro.props;
+---
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">Ankur<span>.</span>Tripathi</a>
+    <div class="nav-links" id="navLinks">
+      <a href="/#about" class="navlink">About</a>
+      <a href="/#services" class="navlink">What I do</a>
+      <a href="/writing/" class="navlink">Writing</a>
+      <a href="/faq/" class="navlink">FAQ</a>
+      <a href="/#contact" class="btn">Let's talk</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+  </div>
+</nav>
+<script is:inline>
+  const nav = document.getElementById('nav');
+  if (nav) {
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30));
+    const t = document.getElementById('menuToggle');
+    const l = document.getElementById('navLinks');
+    t && t.addEventListener('click', () => l.classList.toggle('open'));
+  }
+</script>

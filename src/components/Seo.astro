@@ -1,0 +1,62 @@
+---
+// Handles all meta tags, social previews, and JSON-LD structured data.
+// Structured data is what gets you understood and cited by AI answer engines.
+interface Props {
+  title: string;
+  description: string;
+  path?: string;            // e.g. "/articles/aeo/" — used for canonical + OG url
+  ogImage?: string;         // e.g. "/images/aeo.jpg"
+  type?: 'website' | 'article';
+  publishDate?: Date;
+  author?: string;
+  jsonld?: Record<string, any> | Record<string, any>[]; // extra schema (Article, FAQPage…)
+}
+const {
+  title, description, path = '', ogImage,
+  type = 'website', publishDate, author = 'Ankur Tripathi', jsonld,
+} = Astro.props;
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const canonical = site + path;
+const image = ogImage ? site + ogImage : site + '/og-default.png';
+
+// Person schema sits on every page — it builds your entity/authority for AI engines.
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Ankur Tripathi',
+  jobTitle: 'Growth & Content Marketing Leader',
+  description: 'Senior growth and content marketing leader specialising in SEO/AEO, content strategy, lifecycle, martech and full-funnel growth for AI, SaaS, wealth and fintech products.',
+  url: site,
+  sameAs: [
+    'https://www.linkedin.com/in/ankur-tripathi-359ab72',
+    'https://x.com/ankur2987',
+  ],
+};
+
+const schemas = [personSchema, ...(Array.isArray(jsonld) ? jsonld : jsonld ? [jsonld] : [])];
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={image} />
+{type === 'article' && publishDate && (
+  <meta property="article:published_time" content={publishDate.toISOString()} />
+)}
+{type === 'article' && <meta property="article:author" content={author} />}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@ankur2987" />
+<meta name="twitter:site" content="@ankur2987" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+
+{schemas.map((s) => (
+  <script type="application/ld+json" set:html={JSON.stringify(s)} />
+))}
