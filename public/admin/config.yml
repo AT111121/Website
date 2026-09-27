@@ -6,8 +6,9 @@
 
 backend:
   name: github
-  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME   # ← change this (e.g. ankurtripathi/website)
+  repo: ankurt23388/Website
   branch: main
+  base_url: https://sveltia-cms-auth.ankurt23388.workers.dev
   # After you deploy the auth worker (see README step 5), paste its URL here:
   # base_url: https://sveltia-cms-auth.YOURSUBDOMAIN.workers.dev
 
